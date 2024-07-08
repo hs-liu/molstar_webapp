@@ -1,6 +1,6 @@
 
 import React from "react";
-import MolstarViewer from "./component/MolstarViwer";
+import FileSelector from "./component/FileSelector";
 
 const App: React.FC = () => {
 
@@ -9,7 +9,7 @@ const App: React.FC = () => {
       <header className="App-header">
         <h1>Mol* Viewer with React and Vite</h1>
       </header>
-      <MolstarViewer />
+      <FileSelector />
     </div>
   );
 }

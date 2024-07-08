@@ -1,30 +1,27 @@
 import { createRootViewer } from "./init";
 
-export async function initView() {
+export async function initView(filename: string, pdbData: string) {
     const plugin = await createRootViewer();
 
-    //the trail data: replace to dataset later
-    const fileData = await plugin.builders.data.download({
-        url: "https://models.rcsb.org/5ee7.bcif",
-        isBinary: true,
-    })
-
+    /* const dataFile = new File([pdbData], filename, { type: 'text/plain' });
+    const fileData = await plugin.builders.data.readFile({file: dataFile, isBinary: false }); */
+      
     const trajectorySO = await plugin.builders.structure.parseTrajectory(
-        fileData,
-        "mmcif",
+        pdbData,
+        "pdb",
     );
-
+    
     const modelSO = await plugin.builders.structure.createModel(trajectorySO);
     const structureSO = await plugin.builders.structure.createStructure(modelSO);
     const structure = structureSO.data!;
-
-    const representationSO = await plugin.builders.structure.representation.addRepresentation(
+    
+    await plugin.builders.structure.representation.addRepresentation(
         structureSO,
         {
-            type: "cartoon",
-            color:'chain-id',
+        type: "cartoon",
+        color: 'chain-id',
         },
-        {tag: "my-cartoon"}
+        { tag: "my-cartoon" }
     );
     return plugin;
 }
