@@ -1,8 +1,12 @@
 {
   "name": "molstar_webapp",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
+  "description": "mol* webapp.",
+  "author": "Hongshuo Liu",
+  "repository": "https://github.com/hs-liu/molstar_webapp",
+  "license": "All Rights Reserved",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

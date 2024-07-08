@@ -1,14 +1,9 @@
 import { createRootViewer } from "./init";
-//import { StateSelection, StateTransform } from "molstar/lib/mol-state";
-//import { createStructureRepresentationParams } from "molstar/lib/mol-plugin-state/helpers/structure-representation-params";
-
-/* const byres = document.getElementById("byres")!;
-const bychain = document.getElementById("bychain")!;
-const bypos = document.getElementById("bypos")!; */
 
 export async function initView() {
     const plugin = await createRootViewer();
 
+    //the trail data: replace to dataset later
     const fileData = await plugin.builders.data.download({
         url: "https://models.rcsb.org/5ee7.bcif",
         isBinary: true,
