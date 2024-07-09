@@ -13,9 +13,11 @@ npm install
 npm run dev
 ```
 
-Future Work:
+TODO:
 ------------
 - Enable display of selected ```.pdb``` file with functions imported from Mol* package
+  [currently left with debugging]
+- Enable display of residue pairs upon selection
 - Improve on UI/UX design
 
 Any query please contact author: liuhongshuo.93@gmail.com
