@@ -19,7 +19,7 @@ const App: React.FC = () => {
           <FileSelector /> 
         </div>
         <div className="w-1/2 h-screen bg-white-500 justify-center">
-          <p> 2nd box </p>
+          <p> TO_BE_IMPLEMENTED </p>
         </div>
       </div>
     </div>
