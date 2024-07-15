@@ -33,7 +33,7 @@ const MolstarViewer: React.FC<FileProps> = ({fileName}) => {
     
     
   
-    return ( <div className="flex flex-col h-full w-full p-4">
+    return ( <div className="flex w-full h-screen">
         
         <div className="flex-1 p-4">
           <div ref={viewerRef} id="app" className="outline outline-1 outline-dotted outline-gray-300 h-full w-full">

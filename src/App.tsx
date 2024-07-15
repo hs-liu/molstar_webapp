@@ -14,10 +14,14 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Mol* Viewer with React and Vite</h1>
-      </header>
-      <FileSelector />
+      <div className="flex space-x-4">
+        <div className="w-1/2 h-screen bg-white-500 justify-center">
+          <FileSelector /> 
+        </div>
+        <div className="w-1/2 h-screen bg-white-500 justify-center">
+          <p> 2nd box </p>
+        </div>
+      </div>
     </div>
   );
 }

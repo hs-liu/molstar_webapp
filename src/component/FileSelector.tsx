@@ -18,7 +18,6 @@ const FileSelector: React.FC = () => {
   const [selectedFileName, setSelectedFileName] = useState<string|null>(null);
   const [options, setOptions] = useState<OptionType[]>([])
   const [error, setError] = useState<string|null>(null);
-  const [loadedContent, setLoadedContent] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<SingleValue<OptionType>>();
 
   // using GET query to get all filenames 
@@ -76,7 +75,6 @@ const FileSelector: React.FC = () => {
         // Return success if the selected file exists
         return response.text();
       })
-      .then((content) => setLoadedContent(content))
       .catch((error) => {
         console.error('Error fetching file content:', error);
         setError('Error fetching file content');
@@ -86,8 +84,8 @@ const FileSelector: React.FC = () => {
 
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Select a File to Display</h1>
+    <div className="p-2">
+      <h1 className="text-xl font-bold">Select a File to Display</h1>
       <Select 
       id="update" 
       className="px-3 py-2 font-xs"
@@ -106,11 +104,11 @@ const FileSelector: React.FC = () => {
        >
         Load Structure
       </button>
-      {loadedContent && (
-        <div className="mt-4">
+      {
+        <div className="w-full h-screen">
           <MolstarViewer fileName={fileName ?? ""} />
         </div>
-      )}
+      }
     </div>
   );
 };
