@@ -2,7 +2,6 @@ import { createRootViewer } from "./init";
 
 export async function initView(filename: string) {
     const plugin = await createRootViewer();
-    console.log(filename)
 
     const data = await plugin.builders.data.download({
         url: `http://localhost:8080/api/files/${filename}`,

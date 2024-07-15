@@ -9,22 +9,29 @@ interface FileProps {
 const MolstarViewer: React.FC<FileProps> = ({fileName}) => {
     const viewerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-  
-    useEffect(() => {
-        let plugin: PluginContext | null = null;
 
-        if (viewerRef.current && canvasRef.current) { 
-            initView(fileName).then(createdPlugin => {
-            plugin = createdPlugin;
-          }).catch(error => console.error("Failed to initialize Mol* viewer", error));
+    const handleLoadDisplay = (filename: string) => {
+      let plugin: PluginContext | null = null;
+
+      if (viewerRef.current && canvasRef.current) { 
+          initView(filename).then(createdPlugin => {
+          plugin = createdPlugin;
+        }).catch(error => console.error("Failed to initialize Mol* viewer", error));
+      }
+  
+      return () => {
+        if (plugin) {
+          plugin.dispose();
         }
+      };
+    } 
+
+    useEffect(() => {
+      handleLoadDisplay(fileName);
+      }, [fileName]);
+
     
-        return () => {
-          if (plugin) {
-            plugin.dispose();
-          }
-        };
-      }, []);
+    
   
     return ( <div className="flex flex-col h-full w-full p-4">
         

@@ -15,6 +15,7 @@ interface OptionType {
 const FileSelector: React.FC = () => {
   const [files, setFiles] = useState<string[]>([]);
   const [fileName, setFileName] = useState<string|null>(null);
+  const [selectedFileName, setSelectedFileName] = useState<string|null>(null);
   const [options, setOptions] = useState<OptionType[]>([])
   const [error, setError] = useState<string|null>(null);
   const [loadedContent, setLoadedContent] = useState<string | null>(null);
@@ -48,7 +49,8 @@ const FileSelector: React.FC = () => {
   const handleChange = async (option: SingleValue<OptionType>) => {
     if (option != null) {
       setSelectedOption(option);
-      setFileName(option.value);
+      setSelectedFileName(option.value);
+      console.log(selectedFileName);
     }
   }
 
@@ -61,10 +63,12 @@ const FileSelector: React.FC = () => {
     if (!selectedOption) return;
 
     setError(null); 
-
-    // Retrieve specific file data 
-    // Make sure the specific file exists on the Server
-    fetch(`http://localhost:8080/api/files/${fileName}`)
+    setFileName(selectedFileName)
+    
+    if (fileName) {
+      // Retrieve specific file data 
+      // Make sure the specific file exists on the Server
+      fetch(`http://localhost:8080/api/files/${fileName}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -77,6 +81,7 @@ const FileSelector: React.FC = () => {
         console.error('Error fetching file content:', error);
         setError('Error fetching file content');
       });
+    }
   };
 
 
