@@ -8,15 +8,20 @@ interface OptionType {
   label: string;
 };
 
+/* interface FileProps {
+  selectFunc: (fileName: string) => void
+} */
+
 const FileSelector: React.FC = () => {
   const [files, setFiles] = useState<string[]>([]);
   const [fileName, setFileName] = useState<string|null>(null);
   const [options, setOptions] = useState<OptionType[]>([])
   const [error, setError] = useState<string|null>(null);
-  const [selectedOption, setSelectedOption] = useState<SingleValue<OptionType>>();
   const [loadedContent, setLoadedContent] = useState<string | null>(null);
-  const [fileContent, setFileContent] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<SingleValue<OptionType>>();
 
+  // using GET query to get all filenames 
+  // later display as selectable options
   useEffect(() => {
     fetch('http://localhost:8080/api/files')
       .then((response) => {
@@ -26,6 +31,8 @@ const FileSelector: React.FC = () => {
         return response.json();
       })
       .then((data: string[]) => {
+        // Map data to current useState
+        // create a Selector list
         setFiles(data)
         const options = data.map((file) => ({
           value: file, label: file.replace('.pdb', "")
@@ -45,18 +52,24 @@ const FileSelector: React.FC = () => {
     }
   }
 
+  // When clicked on display stucture
+  // Make sure the selected dile 
   const handleLoadFile = () => {
+    /* if (fileName) {
+      selectFunc(fileName)
+    } */
     if (!selectedOption) return;
 
-    setFileContent(null); // Reset file content
-    setError(null); // Reset error state
+    setError(null); 
 
+    // Retrieve specific file data 
+    // Make sure the specific file exists on the Server
     fetch(`http://localhost:8080/api/files/${fileName}`)
       .then((response) => {
         if (!response.ok) {
-          console.log(fileName);
           throw new Error(`HTTP error! status: ${response.status}`);
         }
+        // Return success if the selected file exists
         return response.text();
       })
       .then((content) => setLoadedContent(content))
@@ -70,7 +83,6 @@ const FileSelector: React.FC = () => {
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold mb-4">Select a File to Display</h1>
-      {error && <p className="text-red-500">{error}</p>}
       <Select 
       id="update" 
       className="px-3 py-2 font-xs"
@@ -81,6 +93,7 @@ const FileSelector: React.FC = () => {
       menuPortalTarget={document.body}
       menuPosition={"fixed"}
       />
+      {error && <p className="text-red-500">{error}</p>}
       <button 
         type='submit'
         onClick={handleLoadFile}
@@ -90,7 +103,7 @@ const FileSelector: React.FC = () => {
       </button>
       {loadedContent && (
         <div className="mt-4">
-          <MolstarViewer fileData={fileContent ?? ""} fileName={fileName ?? ""} />
+          <MolstarViewer fileName={fileName ?? ""} />
         </div>
       )}
     </div>
